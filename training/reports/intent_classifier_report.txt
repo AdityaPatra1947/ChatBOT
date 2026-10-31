@@ -1,0 +1,116 @@
+INTENT CLASSIFIER - TRAINING REPORT
+================================================================
+Dataset            : 943 questions, 51 intents (data/intents.json)
+Train / test       : 754 / 189 (stratified, seed 42)
+Training data      : 1649 after augmentation (FAQ phrasings + 1 typo copy each)
+Features compared  : TF-IDF word+char n-grams / 384-d fine-tuned MiniLM embedding / both
+Network            : 384 -> 256 (ReLU, dropout 0.4) -> 51 softmax  [PyTorch]
+Training           : 60 epochs, AdamW lr=0.002, batch 32, label smoothing 0.05
+
+Ablation (test accuracy / macro-F1):
+  tfidf       75.1% /  75.0%
+  embedding   85.7% /  84.8%
+  combined    81.0% /  80.2%
+
+Chosen feature set : embedding (best test accuracy)
+FINAL MODEL TEST ACCURACY : 85.71%
+FINAL MODEL MACRO F1      : 84.82%
+
+Confidence threshold vs coverage (answered by the classifier) and accuracy:
+  threshold  coverage  accuracy
+        0.0    100.0%     85.7%
+        0.2     96.3%     87.9%
+        0.3     91.0%     89.5%
+        0.4     89.9%     90.0%
+        0.5     83.1%     93.6%
+        0.6     78.3%     93.2%
+        0.7     72.5%     94.2%
+Chosen threshold: 0.5 -> below it the bot falls back to semantic search.
+
+Misclassified test questions (27):
+  'vit ranking'  true=why_vit  predicted=cutoff  conf=0.40
+  'management of college'  true=principal  predicted=mms_admission  conf=0.47
+  'library hours'  true=timings  predicted=facilities  conf=0.79
+  'do students go to iit for mtech'  true=higher_studies  predicted=mtech_admission  conf=0.91
+  'post graduation engineering fees'  true=fees_mtech  predicted=fees_dse  conf=0.45
+  'betterment in admission'  true=branch_change  predicted=why_vit  conf=0.16
+  'annual fee'  true=fees_btech  predicted=fee_same  conf=0.80
+  'process at college after cap allotment'  true=admission_day  predicted=btech_admission  conf=0.44
+  'institute quota cutoff'  true=cutoff  predicted=fees_iq  conf=0.50
+  'vit ke baare me batao'  true=about  predicted=location  conf=0.17
+  'universities where students went'  true=higher_studies  predicted=hostel  conf=0.15
+  'college kidhar hai'  true=location  predicted=timings  conf=0.16
+  'vit kaisa college hai'  true=why_vit  predicted=location  conf=0.64
+  'acap fees'  true=fees_iq  predicted=fees_btech  conf=0.43
+  'when is the admission'  true=btech_admission  predicted=admission_day  conf=0.74
+  'does google come to vit'  true=placements  predicted=website  conf=0.45
+  'ielts toefl guidance'  true=higher_studies  predicted=academics  conf=0.20
+  'does vit offer phd'  true=courses  predicted=phd_admission  conf=0.94
+  'translate hello to spanish'  true=out_of_scope  predicted=greeting  conf=0.87
+  'steps to complete admission'  true=admission_day  predicted=btech_admission  conf=0.84
+  'incubation'  true=research  predicted=hostel  conf=0.26
+  'branch comparison'  true=branch_compare  predicted=branch_change  conf=0.43
+  'tuition fee waiver'  true=scholarship  predicted=fee_same  conf=0.25
+  'nep 2020'  true=academics  predicted=goodbye  conf=0.18
+  'mba at vit'  true=mms_admission  predicted=fees_mms  conf=0.23
+  'college address'  true=location  predicted=contact  conf=0.67
+  'net banking fees'  true=payment  predicted=fees_btech  conf=0.76
+
+Per-intent report:
+                  precision    recall  f1-score   support
+
+           about       1.00      0.67      0.80         3
+       academics       0.75      0.75      0.75         4
+   accreditation       1.00      1.00      1.00         4
+   admission_day       0.67      0.50      0.57         4
+    aiml_honours       1.00      1.00      1.00         3
+          alumni       1.00      1.00      1.00         2
+   branch_change       0.67      0.67      0.67         3
+  branch_compare       1.00      0.67      0.80         3
+        brochure       1.00      1.00      1.00         4
+ btech_admission       0.67      0.80      0.73         5
+         canteen       1.00      1.00      1.00         3
+         careers       1.00      1.00      1.00         2
+         contact       0.83      1.00      0.91         5
+         courses       1.00      0.80      0.89         5
+          cutoff       0.75      0.75      0.75         4
+       documents       1.00      1.00      1.00         5
+   dse_admission       1.00      1.00      1.00         3
+      facilities       0.80      1.00      0.89         4
+        fee_same       0.60      1.00      0.75         3
+      fees_btech       0.67      0.80      0.73         5
+        fees_dse       0.75      1.00      0.86         3
+         fees_iq       0.75      0.75      0.75         4
+        fees_mms       0.75      1.00      0.86         3
+      fees_mtech       1.00      0.67      0.80         3
+first_year_start       1.00      1.00      1.00         3
+         goodbye       0.83      1.00      0.91         5
+        greeting       0.83      1.00      0.91         5
+  higher_studies       0.00      0.00      0.00         3
+             hod       1.00      1.00      1.00         3
+          hostel       0.67      1.00      0.80         4
+     internships       1.00      1.00      1.00         4
+            loan       1.00      1.00      1.00         3
+        location       0.67      0.67      0.67         6
+   mms_admission       0.67      0.67      0.67         3
+ mtech_admission       0.75      1.00      0.86         3
+    out_of_scope       1.00      0.83      0.91         6
+         payment       1.00      0.75      0.86         4
+   phd_admission       0.75      1.00      0.86         3
+      placements       1.00      0.80      0.89         5
+        presence       1.00      1.00      1.00         2
+       principal       1.00      0.67      0.80         3
+           quota       1.00      1.00      1.00         3
+         ragging       1.00      1.00      1.00         3
+          refund       1.00      1.00      1.00         4
+        research       1.00      0.67      0.80         3
+     scholarship       1.00      0.80      0.89         5
+    student_life       1.00      1.00      1.00         4
+          thanks       1.00      1.00      1.00         5
+         timings       0.67      0.67      0.67         3
+         website       0.80      1.00      0.89         4
+         why_vit       0.50      0.33      0.40         3
+
+        accuracy                           0.86       189
+       macro avg       0.86      0.86      0.85       189
+    weighted avg       0.86      0.86      0.85       189

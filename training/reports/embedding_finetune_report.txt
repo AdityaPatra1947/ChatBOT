@@ -1,0 +1,97 @@
+EMBEDDING MODEL FINE-TUNING - REPORT
+============================================================
+Base model     : sentence-transformers/all-MiniLM-L6-v2
+Training data  : 1649 questions (754 patterns + FAQ phrasings + typo copies)
+Test data      : 189 held-out questions (never used in training)
+Loss           : MultipleNegativesRankingLoss (question -> its FAQ / reply text)
+Training       : 5 epochs, batch 32 (no duplicate targets), lr 5e-05, CPU
+
+                          BASE    FINE-TUNED
+FAQ search accuracy      68.5%     84.5%
+Intent accuracy          70.4%     82.0%
+
+FAQ search accuracy = for each test question, is the closest FAQ row the correct FAQ
+(this is exactly how the chatbot's semantic search picks an answer).
+
+Still wrong after fine-tuning (26):
+  'vit ranking'  -> expected: Why should I choose VIT? How does VIT compare with VJTI or COEP?
+  'management of college'  -> expected: Who is the principal of VIT? Who is the director?
+  'library hours'  -> expected: What are the college timings?
+  'do students go to iit for mtech'  -> expected: Do VIT students go for higher studies abroad?
+  'post graduation engineering fees'  -> expected: What is the fee for M.Tech at VIT?
+  'betterment in admission'  -> expected: Can I change my branch later?
+  'annual fee'  -> expected: What is the fee for B.Tech at VIT? What is the fee structure?
+  'institute quota cutoff'  -> expected: What is the cutoff for VIT?
+  'college life'  -> expected: Tell me about student life, clubs and events at VIT.
+  'vit ke baare me batao'  -> expected: Tell me about VIT. What is the history of the college?
+  'master of technology admission'  -> expected: How can I apply for M.Tech at VIT?
+  'universities where students went'  -> expected: Do VIT students go for higher studies abroad?
+  'vit kaisa college hai'  -> expected: Why should I choose VIT? How does VIT compare with VJTI or COEP?
+  'when is the admission'  -> expected: How do I get admission to B.Tech first year at VIT? What is the admission process?
+  'institute level admission'  -> expected: How do I get admission to B.Tech first year at VIT? What is the admission process?
+  'does google come to vit'  -> expected: How are placements at VIT?
+  'ielts toefl guidance'  -> expected: Do VIT students go for higher studies abroad?
+  'does vit offer phd'  -> expected: What courses and programs does VIT offer?
+  'mms cap round'  -> expected: How can I apply for MMS (MBA) at VIT?
+  'what is institute quota'  -> expected: How do I get admission to B.Tech first year at VIT? What is the admission process?
+  'steps to complete admission'  -> expected: What happens when I report to VIT for CAP admission? What are the steps on admission day?
+  'incubation'  -> expected: What research and innovation happens at VIT?
+  'tuition fee waiver'  -> expected: Are scholarships or fee concessions available at VIT?
+  'publications'  -> expected: What research and innovation happens at VIT?
+  'admission confirmation process'  -> expected: What happens when I report to VIT for CAP admission? What are the steps on admission day?
+  'net banking fees'  -> expected: How do I pay the fees? What payment modes are accepted?
+
+Wrong with base model (53):
+  'management of college'
+  'library hours'
+  'hostel fees'
+  'do students go to iit for mtech'
+  'post graduation engineering fees'
+  'betterment in admission'
+  'annual fee'
+  'can i get fee waiver'
+  'link for college site'
+  'ph.d. admission'
+  'btech branches'
+  'documents for obc'
+  'college fest'
+  'bank loan for fees'
+  'do i need gap certificate'
+  'is it necessary to visit college'
+  'institute quota cutoff'
+  'will fees increase'
+  'hod of extc'
+  'dse acap fees'
+  'college life'
+  'vit ke baare me batao'
+  'official page of college'
+  'which university is vit affiliated to'
+  'campus hostel'
+  'universities where students went'
+  'college kidhar hai'
+  'vit kaisa college hai'
+  'cutoff for extc'
+  'principal kaun hai'
+  'outstation students stay'
+  'confused between branches'
+  'mms admission process'
+  'what does vit stand for'
+  'does google come to vit'
+  'ielts toefl guidance'
+  'does vit offer phd'
+  'mms cap round'
+  'mms institute level fees'
+  'what is institute quota'
+  'steps to complete admission'
+  'i am from marathi medium'
+  'incubation'
+  'documents for outside maharashtra student'
+  'tuition fee waiver'
+  'publications'
+  'admission confirmation process'
+  'net banking fees'
+  'placement for extc'
+  'what happens at the admission cell'
+  'iot course'
+  'branch sliding'
+  'vit fees'

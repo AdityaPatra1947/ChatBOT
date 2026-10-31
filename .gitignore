@@ -1,0 +1,37 @@
+# Node dependencies
+node_modules/
+frontend/node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Build files
+dist/
+build/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+myapp/
+.venv/
+env/
+
+# Local editor and agent settings
+.claude/
+.idea/
+.vscode/
+
+# Regenerable training assets and embedding cache
+models/_eval_encoder/
+models/*_ckpt/
+data/embed_cache.npz
+.pytest_cache/
+*.log
+
+# Local document outside the application source
+/VIT_Chatbot_Viva_Guide.docx

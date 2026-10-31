@@ -1,0 +1,4 @@
+-r ../backend/requirements.txt
+datasets
+accelerate
+matplotlib

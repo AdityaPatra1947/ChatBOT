@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+numpy
+sentence-transformers
+requests
+beautifulsoup4
+lxml
+pypdf
+pypdfium2
+rapidocr_onnxruntime
